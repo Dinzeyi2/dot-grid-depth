@@ -52,3 +52,61 @@ export function GridPatternCardBody({ className, ...props }: React.HTMLAttribute
     />
   )
 }
+
+interface EmailFormProps {
+  onSubmit?: (email: string) => void
+}
+
+export function EmailSubscriptionForm({ onSubmit }: EmailFormProps) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+    if (email && onSubmit) {
+      onSubmit(email)
+    }
+  }
+
+  return (
+    <motion.form 
+      onSubmit={handleSubmit}
+      className="mt-6 space-y-4"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.3 }}
+    >
+      <div className="relative">
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email address"
+          required
+          className={cn(
+            "w-full px-4 py-3 rounded-lg border bg-background/50 backdrop-blur-sm",
+            "border-border/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/20",
+            "text-foreground placeholder:text-muted-foreground",
+            "transition-all duration-300 focus:outline-none",
+            "text-sm"
+          )}
+        />
+      </div>
+      
+      <motion.button
+        type="submit"
+        className={cn(
+          "w-full px-6 py-3 rounded-lg font-medium text-sm",
+          "bg-primary text-primary-foreground",
+          "hover:bg-primary/90 focus:bg-primary/90",
+          "focus:outline-none focus:ring-2 focus:ring-primary/50",
+          "transition-all duration-300 transform",
+          "hover:scale-[1.02] active:scale-[0.98]",
+          "shadow-lg hover:shadow-xl"
+        )}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+      >
+        Send
+      </motion.button>
+    </motion.form>
+  )
+}

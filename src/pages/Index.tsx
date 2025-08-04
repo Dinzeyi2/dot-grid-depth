@@ -1,6 +1,16 @@
-import { GridPatternCard, GridPatternCardBody } from "@/components/ui/card-with-grid-ellipsis-pattern"
+import { GridPatternCard, GridPatternCardBody, EmailSubscriptionForm } from "@/components/ui/card-with-grid-ellipsis-pattern"
+import { useToast } from "@/hooks/use-toast"
 
 export function GridPatternCardDemo() {
+  const { toast } = useToast()
+
+  const handleEmailSubmit = (email: string) => {
+    toast({
+      title: "Email submitted!",
+      description: `Thank you! We'll send updates to ${email}`,
+    })
+  }
+
   return (
     <GridPatternCard>
       <GridPatternCardBody>
@@ -12,6 +22,7 @@ export function GridPatternCardDemo() {
           Perfect for creating depth and visual interest while maintaining 
           readability and modern aesthetics.
         </p>
+        <EmailSubscriptionForm onSubmit={handleEmailSubmit} />
       </GridPatternCardBody>
     </GridPatternCard>
   )
