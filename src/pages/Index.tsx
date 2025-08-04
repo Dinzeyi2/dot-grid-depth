@@ -17,15 +17,20 @@ export function GridPatternCardDemo() {
   ];
 
   const professionalFields = [
-    "Software Development",
-    "Data Science", 
-    "Marketing",
-    "Design",
-    "Sales",
-    "Finance",
-    "Healthcare",
-    "Education",
-    "Consulting",
+    "Machine Learning Engineer",
+    "DevOps Engineer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "Data Engineer",
+    "Cloud Architect",
+    "Cybersecurity Engineer",
+    "Mobile Developer",
+    "AI/ML Engineer",
+    "Software Architect",
+    "Site Reliability Engineer (SRE)",
+    "Data Scientist",
+    "Product Manager (Tech)",
     "Other"
   ];
 
