@@ -1,11 +1,13 @@
 import { GridPatternCard, GridPatternCardBody, PlaceholdersAndVanishInput } from "@/components/ui/card-with-grid-ellipsis-pattern"
 import { useToast } from "@/hooks/use-toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Input } from "@/components/ui/input"
 import { useState } from "react"
 
 export function GridPatternCardDemo() {
   const { toast } = useToast()
   const [selectedField, setSelectedField] = useState("")
+  const [customField, setCustomField] = useState("")
   const [email, setEmail] = useState("")
 
   const placeholders = [
@@ -31,7 +33,7 @@ export function GridPatternCardDemo() {
     "Site Reliability Engineer (SRE)",
     "Data Scientist",
     "Product Manager (Tech)",
-    "Other"
+    "Enter your own"
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +42,8 @@ export function GridPatternCardDemo() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!selectedField || !email) {
+    const finalField = selectedField === "Enter your own" ? customField : selectedField;
+    if (!selectedField || !email || (selectedField === "Enter your own" && !customField)) {
       toast({
         title: "Missing information",
         description: "Please select your professional field and enter your email address.",
@@ -50,7 +53,7 @@ export function GridPatternCardDemo() {
     }
     toast({
       title: "Successfully joined waitlist!",
-      description: `Thank you! We'll contact you at ${email} with updates for ${selectedField} professionals.`,
+      description: `Thank you! We'll contact you at ${email} with updates for ${finalField} professionals.`,
     })
   };
 
@@ -82,6 +85,14 @@ export function GridPatternCardDemo() {
                 ))}
               </SelectContent>
             </Select>
+            {selectedField === "Enter your own" && (
+              <Input
+                placeholder="Enter your professional field"
+                value={customField}
+                onChange={(e) => setCustomField(e.target.value)}
+                className="mt-2"
+              />
+            )}
           </div>
           <PlaceholdersAndVanishInput
             placeholders={placeholders}
