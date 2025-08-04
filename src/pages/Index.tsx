@@ -1,26 +1,51 @@
 import { GridPatternCard, GridPatternCardBody, PlaceholdersAndVanishInput } from "@/components/ui/card-with-grid-ellipsis-pattern"
 import { useToast } from "@/hooks/use-toast"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react"
 
 export function GridPatternCardDemo() {
   const { toast } = useToast()
+  const [selectedField, setSelectedField] = useState("")
+  const [email, setEmail] = useState("")
 
   const placeholders = [
     "Enter your email address",
-    "Get updates and newsletters",
+    "Get updates and newsletters", 
     "Subscribe to our mailing list",
     "Join our community today",
     "Stay informed with our updates"
   ];
 
+  const professionalFields = [
+    "Software Development",
+    "Data Science", 
+    "Marketing",
+    "Design",
+    "Sales",
+    "Finance",
+    "Healthcare",
+    "Education",
+    "Consulting",
+    "Other"
+  ];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setEmail(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!selectedField || !email) {
+      toast({
+        title: "Missing information",
+        description: "Please select your professional field and enter your email address.",
+        variant: "destructive"
+      })
+      return;
+    }
     toast({
-      title: "Question submitted!",
-      description: "Thank you for your question. We'll get back to you soon!",
+      title: "Successfully joined waitlist!",
+      description: `Thank you! We'll contact you at ${email} with updates for ${selectedField} professionals.`,
     })
   };
 
@@ -35,7 +60,24 @@ export function GridPatternCardDemo() {
           Perfect for creating depth and visual interest while maintaining 
           readability and modern aesthetics.
         </p>
-        <div className="mt-6">
+        <div className="mt-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Professional Field
+            </label>
+            <Select value={selectedField} onValueChange={setSelectedField}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select your professional field" />
+              </SelectTrigger>
+              <SelectContent>
+                {professionalFields.map((field) => (
+                  <SelectItem key={field} value={field}>
+                    {field}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <PlaceholdersAndVanishInput
             placeholders={placeholders}
             onChange={handleChange}
