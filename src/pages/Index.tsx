@@ -5,11 +5,11 @@ export function GridPatternCardDemo() {
   const { toast } = useToast()
 
   const placeholders = [
-    "How to assemble your own PC?",
-    "What is the best graphics card?",
-    "How to build a gaming setup?",
-    "What components do I need?",
-    "Where to buy PC parts?"
+    "Enter your email address",
+    "Get updates and newsletters",
+    "Subscribe to our mailing list",
+    "Join our community today",
+    "Stay informed with our updates"
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
