@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import { supabase } from "@/integrations/supabase/client"
 
 export function GridPatternCardDemo() {
   const { toast } = useToast()
@@ -40,7 +41,7 @@ export function GridPatternCardDemo() {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const finalField = selectedField === "Enter your own" ? customField : selectedField;
     if (!selectedField || !email || (selectedField === "Enter your own" && !customField)) {
@@ -51,10 +52,59 @@ export function GridPatternCardDemo() {
       })
       return;
     }
-    toast({
-      title: "Successfully joined waitlist!",
-      description: `Thank you! We'll contact you at ${email} with updates for ${finalField} professionals.`,
-    })
+
+    try {
+      // Check if email already exists
+      const { data: existingEntry } = await supabase
+        .from('waitlist')
+        .select('email')
+        .eq('email', email)
+        .maybeSingle();
+      
+      if (existingEntry) {
+        toast({
+          title: "Email already registered",
+          description: "This email is already on our waitlist!",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      // Insert new entry
+      const { error } = await supabase
+        .from('waitlist')
+        .insert({
+          email: email,
+          professional_field: finalField
+        });
+      
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Something went wrong. Please try again.",
+          variant: "destructive"
+        });
+        console.error('Error:', error);
+        return;
+      }
+      
+      toast({
+        title: "Congratulations!",
+        description: `Thank you! We'll contact you at ${email} with updates for ${finalField} professionals.`,
+      });
+      
+      // Reset form
+      setSelectedField("");
+      setCustomField("");
+      setEmail("");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive"
+      });
+      console.error('Error:', error);
+    }
   };
 
   return (
