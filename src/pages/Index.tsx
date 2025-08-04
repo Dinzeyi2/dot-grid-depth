@@ -1,15 +1,28 @@
-import { GridPatternCard, GridPatternCardBody, EmailSubscriptionForm } from "@/components/ui/card-with-grid-ellipsis-pattern"
+import { GridPatternCard, GridPatternCardBody, PlaceholdersAndVanishInput } from "@/components/ui/card-with-grid-ellipsis-pattern"
 import { useToast } from "@/hooks/use-toast"
 
 export function GridPatternCardDemo() {
   const { toast } = useToast()
 
-  const handleEmailSubmit = (email: string) => {
+  const placeholders = [
+    "How to assemble your own PC?",
+    "What is the best graphics card?",
+    "How to build a gaming setup?",
+    "What components do I need?",
+    "Where to buy PC parts?"
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     toast({
-      title: "Email submitted!",
-      description: `Thank you! We'll send updates to ${email}`,
+      title: "Question submitted!",
+      description: "Thank you for your question. We'll get back to you soon!",
     })
-  }
+  };
 
   return (
     <GridPatternCard>
@@ -22,7 +35,13 @@ export function GridPatternCardDemo() {
           Perfect for creating depth and visual interest while maintaining 
           readability and modern aesthetics.
         </p>
-        <EmailSubscriptionForm onSubmit={handleEmailSubmit} />
+        <div className="mt-6">
+          <PlaceholdersAndVanishInput
+            placeholders={placeholders}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+          />
+        </div>
       </GridPatternCardBody>
     </GridPatternCard>
   )
