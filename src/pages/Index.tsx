@@ -28,7 +28,7 @@ export function GridPatternCardDemo() {
     <GridPatternCard>
       <GridPatternCardBody>
         <h3 className="text-lg font-bold mb-1 text-foreground">
-          Grid Pattern with Ellipsis
+          Colab with Broad
         </h3>
         <p className="text-wrap text-sm text-foreground/60">
           A sophisticated pattern combining grid layout with ellipsis dots. 
