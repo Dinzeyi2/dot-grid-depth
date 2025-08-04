@@ -64,9 +64,9 @@ export function GridPatternCardDemo() {
           Join the waitlist and Colab with Broad
         </h3>
         <p className="text-wrap text-sm text-foreground/60">
-          A sophisticated pattern combining grid layout with ellipsis dots. 
-          Perfect for creating depth and visual interest while maintaining 
-          readability and modern aesthetics.
+          Broad is a collaboration tool between employees from big tech companies and future hires. 
+          They will help you see the kind of work done inside these companies, gain their knowledge 
+          and experiences to help you land your next tech job.
         </p>
         <div className="mt-6 space-y-4">
           <div>
