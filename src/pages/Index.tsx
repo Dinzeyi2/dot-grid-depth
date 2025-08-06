@@ -159,6 +159,13 @@ const Index = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-8">
       <div className="w-full max-w-md">
+        <div className="flex justify-center mb-8">
+          <img 
+            src="/lovable-uploads/f80dce0c-1e0d-4141-98ab-d9e65db49367.png" 
+            alt="Broad Logo" 
+            className="w-16 h-16 object-contain"
+          />
+        </div>
         <GridPatternCardDemo />
       </div>
     </div>
